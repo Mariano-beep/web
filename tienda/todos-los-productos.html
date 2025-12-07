@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Todos los Productos - Tennis_nba</title>
+    <meta name="description" content="Todos nuestros productos de zapatillas de baloncesto">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS Principal -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- CSS adicional para esta página -->
+    <style>
+        .products-page {
+            padding: 40px 0;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .page-title {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .page-subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .filter-section {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .filter-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .filter-reset {
+            background: none;
+            border: none;
+            color: #ff0000;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .filter-group {
+            margin-bottom: 15px;
+        }
+        
+        .filter-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #666;
+        }
+        
+        .filter-select,
+        .filter-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+        }
+        
+        .filter-select:focus,
+        .filter-input:focus {
+            outline: none;
+            border-color: #ff0000;
+            box-shadow: 0 0 0 3px rgba(255,0,0,0.1);
+        }
+        
+        .price-range {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .price-range input {
+            flex: 1;
+        }
+        
+        .price-separator {
+            color: #666;
+        }
+        
+        .filter-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .filter-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-apply {
+            background: #ff0000;
+            color: white;
+        }
+        
+        .filter-apply:hover {
+            background: #cc0000;
+        }
+        
+        .filter-cancel {
+            background: #f5f5f5;
+            color: #666;
+        }
+        
+        .filter-cancel:hover {
+            background: #e0e0e0;
+        }
+        
+        .products-count {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .products-count strong {
+            color: #333;
+        }
+        
+        .sort-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .sort-select {
+            padding: 8px 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+        }
+        
+        .view-toggle {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .view-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #e0e0e0;
+            background: white;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .view-btn.active {
+            background: #ff0000;
+            color: white;
+            border-color: #ff0000;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .pagination-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #e0e0e0;
+            background: white;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .pagination-btn:hover {
+            border-color: #ff0000;
+            color: #ff0000;
+        }
+        
+        .pagination-btn.active {
+            background: #ff0000;
+            color: white;
+            border-color: #ff0000;
+        }
+        
+        .pagination-ellipsis {
+            color: #666;
+        }
+        
+        .product-card-list {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .product-image-list {
+            width: 200px;
+            height: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        
+        .product-img-list {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-info-list {
+            flex: 1;
+        }
+        
+        .product-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .product-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            display: -webkit-box;
+        
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .btn-wishlist {
+            background: none;
+            border: 1px solid #e0e0e0;
+            color: #666;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-wishlist:hover {
+            border-color: #ff0000;
+            color: #ff0000;
+        }
+        
+        /* Estilos para vista de lista */
+        .products-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        /* Estilos para notificaciones */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+        
+        .cart-count-nav {
+            background: #ff0000;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-left: 5px;
+            font-weight: 500;
+        }
+        
+        .cart-btn-link {
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        @media (max-width: 768px) {
+            .product-card-list {
+                flex-direction: column;
+            }
+            
+            .product-image-list {
+                width: 100%;
+                height: 200px;
+            }
+            
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-title {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container header-container">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <img src="https://sumerlabs.com/default/image-tool-lambda?new-width=64&new-height=64&new-quality=80&url-image=https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Fsumer-app-90b8f.appspot.com%2Fo%2Fprofile_photos%2F1f07665c8faad80eec2d36dd696d8f41%2Fec1be150-9d99-11ec-9cea-85b8361e7fad%3Falt%3Dmedia%26token%3D1f4ba2f2-28ac-48c6-9da1-e1f18ef5fdfe" 
+                         alt="Tennis_nba Logo" class="logo-img">
+                    <span class="logo-text">Tennis_nba</span>
+                </a>
+            </div>
+
+            <nav class="nav-desktop">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">Inicio</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="index.html#categorias" class="nav-link">
+                            Categorías <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-columns">
+                                <div class="dropdown-column">
+                                    <a href="categoria.html?cat=size10" class="dropdown-link">Size 10 y 10.5</a>
+                                    <a href="categoria.html?cat=size9" class="dropdown-link">Size 9 y 9.5</a>
+                                    <a href="categoria.html?cat=size7" class="dropdown-link">Size 7 y 7.5</a>
+                                    <a href="categoria.html?cat=size11" class="dropdown-link">Size 11 y 11.5</a>
+                                    <a href="categoria.html?cat=size8" class="dropdown-link">Size 8 y 8.5</a>
+                                </div>
+                                <div class="dropdown-column">
+                                    <a href="categoria.html?cat=size12" class="dropdown-link">Size 12 y 12.5</a>
+                                    <a href="categoria.html?cat=size13" class="dropdown-link">Size 13 y mas</a>
+                                    <a href="categoria.html?cat=otras" class="dropdown-link">Otras categorias</a>
+                                    <a href="categoria.html?cat=size6" class="dropdown-link">Size 6 y 6.5</a>
+                                    <a href="categoria.html?cat=franelas" class="dropdown-link">Franelas</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="todos-los-productos.html" class="nav-link active">Todos los productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="carrito.html" class="nav-link">Carrito <span class="cart-count-nav">0</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#contacto" class="nav-link">Contáctanos</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <button class="search-btn" aria-label="Buscar">
+                    <i class="fas fa-search"></i>
+                </button>
+                <a href="carrito.html" class="cart-btn-link">
+                    <button class="cart-btn" aria-label="Carrito">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </button>
+                </a>
+                <button class="menu-toggle" id="menuToggle" aria-label="Menú">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <!-- Menú Móvil -->
+            <div class="nav-mobile" id="navMobile">
+                <div class="mobile-header">
+                    <span class="mobile-title">Menú</span>
+                    <button class="mobile-close" id="mobileClose">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <ul class="mobile-nav-list">
+                    <li class="mobile-nav-item">
+                        <a href="index.html" class="mobile-nav-link">Inicio</a>
+                    </li>
+                    <li class="mobile-nav-item">
+                        <a href="index.html#categorias" class="mobile-nav-link">Categorías</a>
+                        <ul class="mobile-submenu">
+                            <li><a href="categoria.html?cat=size10">Size 10 y 10.5</a></li>
+                            <li><a href="categoria.html?cat=size9">Size 9 y 9.5</a></li>
+                            <li><a href="categoria.html?cat=size7">Size 7 y 7.5</a></li>
+                            <li><a href="categoria.html?cat=size11">Size 11 y 11.5</a></li>
+                            <li><a href="categoria.html?cat=size8">Size 8 y 8.5</a></li>
+                            <li><a href="categoria.html?cat=size12">Size 12 y 12.5</a></li>
+                            <li><a href="categoria.html?cat=size13">Size 13 y mas</a></li>
+                            <li><a href="categoria.html?cat=otras">Otras categorias</a></li>
+                        </ul>
+                    </li>
+                    <li class="mobile-nav-item">
+                        <a href="todos-los-productos.html" class="mobile-nav-link active">Todos los productos</a>
+                    </li>
+                    <li class="mobile-nav-item">
+                        <a href="carrito.html" class="mobile-nav-link">Carrito <span class="cart-count-nav">0</span></a>
+                    </li>
+                    <li class="mobile-nav-item">
+                        <a href="index.html#contacto" class="mobile-nav-link">Contáctanos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Overlay para menú móvil -->
+    <div class="menu-overlay"></div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="products-page">
+        <!-- Encabezado de página -->
+        <div class="page-header">
+            <div class="container">
+                <h1 class="page-title">Todos los Productos</h1>
+                <p class="page-subtitle">Explora nuestra completa colección de zapatillas de baloncesto</p>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- Filtros -->
+            <div class="filter-section">
+                <div class="filter-header">
+                    <h2 class="filter-title">Filtrar Productos</h2>
+                    <button class="filter-reset" id="resetFilters">
+                        <i class="fas fa-redo"></i> Restablecer
+                    </button>
+                </div>
+                
+                <div class="filter-grid">
+                    <div class="filter-group">
+                        <label class="filter-label">Categoría</label>
+                        <select class="filter-select" id="filterCategory">
+                            <option value="">Todas las categorías</option>
+                            <option value="size10">Size 10 y 10.5</option>
+                            <option value="size9">Size 9 y 9.5</option>
+                            <option value="size7">Size 7 y 7.5</option>
+                            <option value="size11">Size 11 y 11.5</option>
+                            <option value="size8">Size 8 y 8.5</option>
+                            <option value="size12">Size 12 y 12.5</option>
+                            <option value="size13">Size 13 y mas</option>
+                            <option value="franelas">Franelas</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label class="filter-label">Precio</label>
+                        <div class="price-range">
+                            <input type="number" class="filter-input" id="priceMin" placeholder="Mín" min="0">
+                            <span class="price-separator">-</span>
+                            <input type="number" class="filter-input" id="priceMax" placeholder="Máx" min="0">
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label class="filter-label">Estado</label>
+                        <select class="filter-select" id="filterCondition">
+                            <option value="">Todos los estados</option>
+                            <option value="excellent">Excelente</option>
+                            <option value="good">Bueno</option>
+                            <option value="new">Nuevo</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label class="filter-label">Marca</label>
+                        <select class="filter-select" id="filterBrand">
+                            <option value="">Todas las marcas</option>
+                            <option value="nike">Nike</option>
+                            <option value="adidas">Adidas</option>
+                            <option value="jordan">Jordan</option>
+                            <option value="under-armour">Under Armour</option>
+                            <option value="puma">Puma</option>
+                            <option value="anta">Anta</option>
+                            <option value="lining">Li-Ning</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="filter-actions">
+                    <button class="filter-btn filter-apply" id="applyFilters">
+                        <i class="fas fa-filter"></i> Aplicar Filtros
+                    </button>
+                    <button class="filter-btn filter-cancel" id="clearFilters">
+                        Limpiar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Contador y ordenamiento -->
+            <div class="products-count">
+                Mostrando <strong id="productsShowing">6</strong> de <strong id="productsTotal">6</strong> productos
+            </div>
+            
+            <div class="sort-section">
+                <select class="sort-select" id="sortProducts">
+                    <option value="recent">Más recientes</option>
+                    <option value="price-asc">Precio: Menor a Mayor</option>
+                    <option value="price-desc">Precio: Mayor a Menor</option>
+                    <option value="name-asc">Nombre: A-Z</option>
+                    <option value="name-desc">Nombre: Z-A</option>
+                    <option value="discount">Mayor descuento</option>
+                </select>
+                
+                <div class="view-toggle">
+                    <button class="view-btn active" data-view="grid" aria-label="Vista cuadrícula">
+                        <i class="fas fa-th-large"></i>
+                    </button>
+                    <button class="view-btn" data-view="list" aria-label="Vista lista">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Grid de productos -->
+            <div class="products-grid" id="productsGrid">
+                <!-- Los productos se cargarán aquí con JavaScript -->
+            </div>
+
+            <!-- Paginación -->
+            <div class="pagination" id="pagination">
+                <!-- La paginación se generará dinámicamente -->
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html" class="footer-logo-link">
+                        <img src="https://sumerlabs.com/default/image-tool-lambda?new-width=64&new-height=64&new-quality=80&url-image=https%3A%2F%2Ffirebasestorage.googleapis.com%2Fv0%2Fb%2Fsumer-app-90b8f.appspot.com%2Fo%2Fprofile_photos%2F1f07665c8faad80eec2d36dd696d8f41%2Fec1be150-9d99-11ec-9cea-85b8361e7fad%3Falt%3Dmedia%26token%3D1f4ba2f2-28ac-48c6-9da1-e1f18ef5fdfe" 
+                             alt="Tennis_nba" class="footer-logo-img">
+                        <span class="footer-logo-text">Tennis_nba</span>
+                    </a>
+                    <p class="footer-description">Vendemos tennis de baloncesto de medio uso en buenas condiciones</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4 class="footer-title">Enlaces rápidos</h4>
+                    <ul class="footer-list">
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="todos-los-productos.html">Todos los productos</a></li>
+                        <li><a href="index.html#categorias">Categorías</a></li>
+                        <li><a href="carrito.html">Carrito</a></li>
+                        <li><a href="index.html#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h4 class="footer-title">Contacto</h4>
+                    <ul class="footer-list">
+                        <li><i class="fas fa-phone"></i> +1 (829) 747-1742</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Santo Domingo, RD</li>
+                        <li><i class="fab fa-instagram"></i> @tennis_nba</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p class="copyright">© 2024 Tennis_nba. Todos los derechos reservados.</p>
+                <p class="footer-legal">
+                    Consulta nuestros <a href="/terminos-y-condiciones">Términos y condiciones</a>.
+                    Crea tu página web con <a href="https://sumerlabs.com" target="_blank">Sumer</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botón WhatsApp Flotante -->
+    <a href="https://wa.me/18297471742" target="_blank" class="whatsapp-float">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- JavaScript específico para esta página -->
+    <script>
+        // Datos de productos (compartidos con index.html)
+        const productsData = [
+            {
+                id: 1,
+                name: "✔️KD x Size 11✔️",
+                price: 2800,
+                originalPrice: null,
+                discount: 0,
+                category: "size11",
+                brand: "nike",
+                condition: "excellent",
+                image: "https://sumerlabs.com/default/image-tool-lambda?new-width=500&new-height=500&new-quality=50&url-image=https%3A%2F%2Fsumerlabs.com%2Fprod%2Fcatalogue%2Fffd5cf61afa53447c039e5670b9fc999d44b3591%2Fcb8ca920-c07d-4c57-92de-d654aa74f6b9.jpg",
+                featured: true,
+                description: "Zapatillas KD en excelente estado, tamaño 11"
+            },
+            {
+                id: 2,
+                name: "🕷️Donovan x Size 8.5🕷️",
+                price: 2800,
+                originalPrice: null,
+                discount: 0,
+                category: "size8",
+                brand: "adidas",
+                condition: "excellent",
+                image: "https://sumerlabs.com/default/image-tool-lambda?new-width=500&new-height=500&new-quality=50&url-image=https%3A%2F%2Fsumerlabs.com%2Fprod%2Fcatalogue%2Fffd5cf61afa53447c039e5670b9fc999d44b3591%2F8ca22d82-96c4-4aa4-aa12-a365e3c731b4.jpg",
+                featured: true,
+                description: "Zapatillas Donovan Mitchell, tamaño 8.5"
+            },
+            {
+                id: 3,
+                name: "⏰Lilard x Size 10.5 ⏰",
+                price: 2199,
+                originalPrice: 2800,
+                discount: 21,
+                category: "size10",
+                brand: "adidas",
+                condition: "good",
+                image: "https://sumerlabs.com/default/image-tool-lambda?new-width=500&new-height=500&new-quality=50&url-image=https%3A%2F%2Fsumerlabs.com%2Fsumer-app-90b8f.appspot.com%2Fproduct_photos%252F1f07665c8faad80eec2d36dd696d8f41%252Fd5205b07-342f-4622-a612-9bdded4e8f81%3Falt%3Dmedia%26token%3D6c015fae-f747-417d-9d6e-18974520666f",
+                featured: false,
+                description: "Zapatillas Damian Lillard, 21% de descuento"
+            },
+            {
+                id: 4,
+                name: "🔥Nike GT x Size 10.5 🔥",
+                price: 2199,
+                originalPrice: 2800,
+                discount: 21,
+                category: "size10",
+                brand: "nike",
+                condition: "good",
+                image: "https://sumerlabs.com/default/image-tool-lambda?new-width=500&new-height=500&new-quality=50&url-image=https%3A%2F%2Fsumerlabs.com%2Fsumer-app-90b8f.appspot.com%2Fproduct_photos%252F1f07665c8faad80eec2d36dd696d8f41%252F44bd1fd2-42b9-470b-9882-2cbedf2dff70%3Falt%3Dmedia%26token%3Df0c633eb-d14e-4cb3-a5bb-3e18353c3e04",
+                featured: false,
+                description: "Nike GT Cut, tecnología React"
+            },
+            {
+                id: 5,
+                name: "💀KD x Size 10💀",
+                price: 2199,
+                originalPrice: 2800,
+                discount: 21,
+                category: "size10",
+                brand: "nike",
+                condition: "good",
+                image: "https://sumerlabs.com/default/image-tool-lambda?new-width=500&new-height=500&new-quality=50&url-image=https%3A%2F%2Fsumerlabs.com%2Fsumer-app-90b8f.appspot.com%2Fproduct_photos%252F1f07665c8faad80eec2d36dd696d8f41%252F4b0b95d0-f39f-4bab-8e94-ae36204f3208%3Falt%3Dmedia%26token%3Dd6969224-6815-4094-97b0-720fd803d38c",
+                featured: false,
+                description: "KD 14, excelente tracción y amortiguación"
+            },
+            {
+                id: 6,
+                name: "🏀 Jordan 35 x Size 9 🏀",
+                price: 3500,
+                originalPrice: 4200,
+                discount: 17,
+                category: "size9",
+                brand: "jordan",
+                condition: "excellent",
+                image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                featured: true,
+                description: "Air Jordan 35, edición limitada"
+            }
+        ];
+
+        // Variables de estado
+        let currentPage = 1;
+        const productsPerPage = 6;
+        let filteredProducts = [...productsData];
+        let currentView = 'grid';
+
+        // Inicializar página
+        document.addEventListener('DOMContentLoaded', function() {
+            initPage();
+        });
+
+        function initPage() {
+            initMobileMenu();
+            initCart();
+            initFilters();
+            initViewToggle();
+            initSorting();
+            renderProducts();
+            initPagination();
+            updateProductsCount();
+        }
+
+        // Función del menú móvil
+        function initMobileMenu() {
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileClose = document.getElementById('mobileClose');
+            const navMobile = document.getElementById('navMobile');
+            const menuOverlay = document.querySelector('.menu-overlay');
+            
+            if (menuToggle && navMobile) {
+                menuToggle.addEventListener('click', function() {
+                    navMobile.classList.add('active');
+                    if (menuOverlay) menuOverlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+            
+            if (mobileClose && navMobile) {
+                mobileClose.addEventListener('click', function() {
+                    navMobile.classList.remove('active');
+                    if (menuOverlay) menuOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            }
+            
+            if (menuOverlay) {
+                menuOverlay.addEventListener('click', function() {
+                    navMobile.classList.remove('active');
+                    menuOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            }
+        }
+
+        // Función del carrito
+        function initCart() {
+            // Actualizar contador del carrito
+            updateCartCount();
+            
+            // Event delegation para botones "Agregar al carrito"
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.btn-add-cart')) {
+                    const btn = e.target.closest('.btn-add-cart');
+                    const productId = parseInt(btn.getAttribute('data-id'));
+                    addToCart(productId);
+                }
+                
+                if (e.target.closest('.btn-wishlist')) {
+                    const btn = e.target.closest('.btn-wishlist');
+                    const productId = parseInt(btn.getAttribute('data-id'));
+                    addToWishlist(productId);
+                }
+            });
+        }
+
+        function addToCart(productId) {
+            // Cargar carrito actual
+            let cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+            
+            // Buscar si el producto ya está en el carrito
+            const existingIndex = cartItems.findIndex(item => item.id === productId);
+            
+            if (existingIndex >= 0) {
+                // Si ya está, aumentar cantidad
+                cartItems[existingIndex].quantity += 1;
+            } else {
+                // Si no está, agregar nuevo
+                cartItems.push({
+                    id: productId,
+                    quantity: 1
+                });
+            }
+            
+            // Guardar en localStorage
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            
+            // Actualizar contador
+            updateCartCount();
+            
+            // Mostrar notificación
+            showNotification('Producto agregado al carrito');
+        }
+
+        function addToWishlist(productId) {
+            // Cargar wishlist actual
+            let wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+            
+            if (!wishlist.includes(productId)) {
+                wishlist.push(productId);
+                localStorage.setItem('wishlist', JSON.stringify(wishlist));
+                showNotification('Producto agregado a favoritos');
+            } else {
+                showNotification('Producto ya está en favoritos');
+            }
+        }
+
+        function updateCartCount() {
+            // Cargar carrito
+            const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+            
+            // Calcular total de items
+            const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
+            
+            // Actualizar todos los contadores
+            const cartCountElements = document.querySelectorAll('.cart-count, .cart-count-nav');
+            cartCountElements.forEach(element => {
+                element.textContent = totalItems;
+            });
+        }
+
+        function showNotification(message) {
+            // Crear notificación
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = `
+                <i class="fas fa-check-circle"></i>
+                <span>${message}</span>
+            `;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #4CAF50;
+                color: white;
+                padding: 15px 20px;
+                border-radius: 6px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Remover después de 3 segundos
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Funciones de filtros
+        function initFilters() {
+            const applyBtn = document.getElementById('applyFilters');
+            const clearBtn = document.getElementById('clearFilters');
+            const resetBtn = document.getElementById('resetFilters');
+            
+            if (applyBtn) {
+                applyBtn.addEventListener('click', applyFilters);
+            }
+            
+            if (clearBtn) {
+                clearBtn.addEventListener('click', clearFilters);
+            }
+            
+            if (resetBtn) {
+                resetBtn.addEventListener('click', clearFilters);
+            }
+        }
+
+        function applyFilters() {
+            const category = document.getElementById('filterCategory').value;
+            const priceMin = parseInt(document.getElementById('priceMin').value) || 0;
+            const priceMax = parseInt(document.getElementById('priceMax').value) || Infinity;
+            const condition = document.getElementById('filterCondition').value;
+            const brand = document.getElementById('filterBrand').value;
+            
+            // Filtrar productos
+            filteredProducts = productsData.filter(product => {
+                // Filtrar por categoría
+                if (category && product.category !== category) return false;
+                
+                // Filtrar por precio
+                if (product.price < priceMin || product.price > priceMax) return false;
+                
+                // Filtrar por condición
+                if (condition && product.condition !== condition) return false;
+                
+                // Filtrar por marca
+                if (brand && product.brand !== brand) return false;
+                
+                return true;
+            });
+            
+            // Resetear a página 1
+            currentPage = 1;
+            
+            // Actualizar contador
+            updateProductsCount();
+            
+            // Renderizar productos
+            renderProducts();
+            initPagination();
+        }
+
+        function clearFilters() {
+            // Limpiar inputs
+            document.getElementById('filterCategory').value = '';
+            document.getElementById('priceMin').value = '';
+            document.getElementById('priceMax').value = '';
+            document.getElementById('filterCondition').value = '';
+            document.getElementById('filterBrand').value = '';
+            
+            // Resetear productos filtrados
+            filteredProducts = [...productsData];
+            
+            // Resetear a página 1
+            currentPage = 1;
+            
+            // Actualizar contador
+            updateProductsCount();
+            
+            // Renderizar productos
+            renderProducts();
+            initPagination();
+        }
+
+        function initViewToggle() {
+            const viewBtns = document.querySelectorAll('.view-btn');
+            
+            viewBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remover clase active de todos los botones
+                    viewBtns.forEach(b => b.classList.remove('active'));
+                    
+                    // Agregar clase active al botón clickeado
+                    this.classList.add('active');
+                    
+                    // Cambiar vista
+                    currentView = this.getAttribute('data-view');
+                    renderProducts();
+                });
+            });
+        }
+
+        function initSorting() {
+            const sortSelect = document.getElementById('sortProducts');
+            
+            if (sortSelect) {
+                sortSelect.addEventListener('change', function() {
+                    sortProducts(this.value);
+                    renderProducts();
+                });
+            }
+        }
+
+        function sortProducts(sortBy) {
+            filteredProducts.sort((a, b) => {
+                switch (sortBy) {
+                    case 'price-asc':
+                        return a.price - b.price;
+                    case 'price-desc':
+                        return b.price - a.price;
+                    case 'name-asc':
+                        return a.name.localeCompare(b.name);
+                    case 'name-desc':
+                        return b.name.localeCompare(a.name);
+                    case 'discount':
+                        return (b.discount || 0) - (a.discount || 0);
+                    case 'recent':
+                    default:
+                        return b.id - a.id;
+                }
+            });
+        }
+
+        function updateProductsCount() {
+            const showingElement = document.getElementById('productsShowing');
+            const totalElement = document.getElementById('productsTotal');
+            
+            if (showingElement && totalElement) {
+                const start = (currentPage - 1) * productsPerPage + 1;
+                const end = Math.min(currentPage * productsPerPage, filteredProducts.length);
+                
+                showingElement.textContent = `${start}-${end}`;
+                totalElement.textContent = filteredProducts.length;
+            }
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            if (!grid) return;
+            
+            // Calcular productos a mostrar
+            const startIndex = (currentPage - 1) * productsPerPage;
+            const endIndex = startIndex + productsPerPage;
+            const productsToShow = filteredProducts.slice(startIndex, endIndex);
+            
+            // Limpiar grid
+            grid.innerHTML = '';
+            
+            // Actualizar clase según vista
+            grid.className = currentView === 'grid' ? 'products-grid' : 'products-list';
+            
+            // Renderizar productos
+            productsToShow.forEach(product => {
+                if (currentView === 'grid') {
+                    grid.appendChild(createProductCard(product));
+                } else {
+                    grid.appendChild(createProductListItem(product));
+                }
+            });
+            
+            // Actualizar contador
+            updateProductsCount();
+        }
+
+        function createProductCard(product) {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            
+            let badge = '';
+            if (product.featured) {
+                badge = `<div class="product-badge featured">
+                    <i class="fas fa-star"></i> Destacado
+                </div>`;
+            } else if (product.discount > 0) {
+                badge = `<div class="product-badge discount">
+                    ${product.discount}% OFF
+                </div>`;
+            }
+            
+            let priceHTML = '';
+            if (product.originalPrice) {
+                priceHTML = `
+                    <span class="original-price">RD$${product.originalPrice.toLocaleString()}</span>
+                    <span class="current-price">RD$${product.price.toLocaleString()}</span>
+                `;
+            } else {
+                priceHTML = `<span class="current-price">RD$${product.price.toLocaleString()}</span>`;
+            }
+            
+            card.innerHTML = `
+                ${badge}
+                <a href="producto.html?id=${product.id}" class="product-link">
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}" class="product-img">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <div class="product-price">
+                            ${priceHTML}
+                        </div>
+                    </div>
+                </a>
+                <button class="btn btn-add-cart" data-id="${product.id}">
+                    <i class="fas fa-plus"></i> Agregar
+                </button>
+            `;
+            
+            return card;
+        }
+
+        function createProductListItem(product) {
+            const item = document.createElement('div');
+            item.className = 'product-card-list';
+            
+            let badge = '';
+            if (product.featured) {
+                badge = `<span class="product-badge featured">Destacado</span>`;
+            } else if (product.discount > 0) {
+                badge = `<span class="product-badge discount">${product.discount}% OFF</span>`;
+            }
+            
+            let priceHTML = '';
+            if (product.originalPrice) {
+                priceHTML = `
+                    <span class="original-price">RD$${product.originalPrice.toLocaleString()}</span>
+                    <span class="current-price">RD$${product.price.toLocaleString()}</span>
+                `;
+            } else {
+                priceHTML = `<span class="current-price">RD$${product.price.toLocaleString()}</span>`;
+            }
+            
+            item.innerHTML = `
+                <div class="product-image-list">
+                    <img src="${product.image}" alt="${product.name}" class="product-img-list">
+                </div>
+                <div class="product-info-list">
+                    <div class="product-meta">
+                        ${badge}
+                        <span>Categoría: ${getCategoryName(product.category)}</span>
+                        <span>Marca: ${getBrandName(product.brand)}</span>
+                    </div>
+                    <h3 class="product-title">${product.name}</h3>
+                    <p class="product-description">${product.description}</p>
+                    <div class="product-price">
+                        ${priceHTML}
+                    </div>
+                    <div class="product-actions">
+                        <button class="btn btn-add-cart" data-id="${product.id}">
+                            <i class="fas fa-plus"></i> Agregar al carrito
+                        </button>
+                        <button class="btn-wishlist" data-id="${product.id}">
+                            <i class="far fa-heart"></i> Guardar
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            return item;
+        }
+
+        function getCategoryName(category) {
+            const categories = {
+                'size10': 'Size 10 y 10.5',
+                'size9': 'Size 9 y 9.5',
+                'size7': 'Size 7 y 7.5',
+                'size11': 'Size 11 y 11.5',
+                'size8': 'Size 8 y 8.5',
+                'size12': 'Size 12 y 12.5',
+                'size13': 'Size 13 y mas',
+                'otras': 'Otras categorias',
+                'franelas': 'Franelas'
+            };
+            return categories[category] || category;
+        }
+
+        function getBrandName(brand) {
+            const brands = {
+                'nike': 'Nike',
+                'adidas': 'Adidas',
+                'jordan': 'Jordan',
+                'under-armour': 'Under Armour',
+                'puma': 'Puma',
+                'anta': 'Anta',
+                'lining': 'Li-Ning'
+            };
+            return brands[brand] || brand;
+        }
+
+        function initPagination() {
+            const pagination = document.getElementById('pagination');
+            if (!pagination) return;
+            
+            // Limpiar paginación existente
+            pagination.innerHTML = '';
+            
+            // Calcular número total de páginas
+            const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+            
+            if (totalPages <= 1) return;
+            
+            // Botón anterior
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'pagination-btn';
+            prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+            prevBtn.disabled = currentPage === 1;
+            prevBtn.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderProducts();
+                    initPagination();
+                }
+            });
+            pagination.appendChild(prevBtn);
+            
+            // Números de página
+            for (let i = 1; i <= totalPages; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.className = 'pagination-btn' + (i === currentPage ? ' active' : '');
+                pageBtn.textContent = i;
+                pageBtn.addEventListener('click', () => {
+                    currentPage = i;
+                    renderProducts();
+                    initPagination();
+                });
+                pagination.appendChild(pageBtn);
+            }
+            
+            // Botón siguiente
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'pagination-btn';
+            nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+            nextBtn.disabled = currentPage === totalPages;
+            nextBtn.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderProducts();
+                    initPagination();
+                }
+            });
+            pagination.appendChild(nextBtn);
+        }
+    </script>
+</body>
+</html>
